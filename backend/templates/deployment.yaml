@@ -1,32 +1,28 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: backend
+  name: mysql
   namespace: expense
   # these labels are deployment related labels
   labels:
-    componet: backend
+    component: mysql
     project: expense
-    tier: app
+    tier: db
 spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
-      component: backend
-      tier: app
+      component: mysql
       project: expense
+      tier: db
   # pod definition
   template:
     metadata:
       labels:
-        component: backend
-        tier: app
+        component: mysql
         project: expense
+        tier: db
     spec:
       containers:
-      - name: backend
-        image: joindevops/backend:{{ .Values.deployment.imageversion }}
-        envFrom:
-        - configMapRef:
-            name: backend
-            
+      - name: mysql
+        image: joindevops/mysql:{{ .Values.deployment.imageVersion }}
